@@ -3,6 +3,29 @@ import concurrent.futures
 import requests
 import sys
 
+
+def print_urlhub():
+    print("""
+     
+██╗░░░██╗██████╗░██╗░░░░░██╗░░██╗██╗░░░██╗██████╗░
+██║░░░██║██╔══██╗██║░░░░░██║░░██║██║░░░██║██╔══██╗
+██║░░░██║██████╔╝██║░░░░░███████║██║░░░██║██████╦╝
+██║░░░██║██╔══██╗██║░░░░░██╔══██║██║░░░██║██╔══██╗
+╚██████╔╝██║░░██║███████╗██║░░██║╚██████╔╝██████╦╝
+░╚═════╝░╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝░╚═════╝░╚═════╝░
+
+------------Made by Abdul Rehman Parkar ---------
+
+Instagram : https://instagram.com/abdulprkr
+LinkedIn  : https://linkedin.com/in/abdulrehmanparkar
+
+    """)
+    
+
+
+if __name__ == "__main__":
+    print_urlhub()
+
 # define command line arguments
 parser = argparse.ArgumentParser(description='Check the status of URLs in a file.')
 parser.add_argument('file', help='the file containing the list of URLs')
@@ -13,11 +36,15 @@ parser.add_argument("-e", "--ext", help="only include URLs with the specified fi
 args = parser.parse_args()
 
 def check_url(url):
+  # add https protocol if not specified
+  if not url.startswith("http"):
+    url = "https://" + url
+
   try:
     r = requests.get(url)
     return r.status_code
-  except:
-    return "Error"
+  except Exception as e:
+    return f"{type(e).__name__}: {e}"
 
 # read file passed as command line argument
 with open(args.file, 'r') as f:
